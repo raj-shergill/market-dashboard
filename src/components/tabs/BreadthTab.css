@@ -1,0 +1,74 @@
+/* Instrument-cluster style: circular gauges — larger to use screen space */
+.breadth-section .section-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.breadth-badge {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  font-weight: 400;
+}
+.breadth-cluster {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding: 32px 24px;
+}
+@media (max-width: 900px) {
+  .breadth-cluster {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .breadth-cluster {
+    grid-template-columns: 1fr;
+  }
+}
+.breadth-gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.breadth-gauge__ring {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: var(--bg4);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.3);
+}
+.breadth-gauge__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.breadth-gauge__value {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.breadth-gauge__sub {
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.breadth-gauge__label {
+  font-size: 12px;
+  color: var(--text2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 120px;
+}
