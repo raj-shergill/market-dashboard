@@ -1,9 +1,14 @@
 # Build and deploy the dashboard to GitHub Pages.
-# Runs on every push to main (e.g. after the daily data refresh commits, or when you push code).
+# Runs on push to main (your commits) and when "Refresh dashboard data" completes
 name: Deploy to GitHub Pages
 
 on:
   push:
+    branches: [main]
+  workflow_run:
+    workflows: ["Refresh dashboard data"]
+    types:
+      - completed
     branches: [main]
 
 permissions:
@@ -12,9 +17,14 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # When triggered by workflow_run, only run if the data refresh succeeded (so it pushed to main).
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # When triggered by workflow_run, get latest main (with the data just pushed).
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
