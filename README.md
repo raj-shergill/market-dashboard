@@ -42,7 +42,7 @@ When you’re ready to make the repo public and deploy:
 
 1. **Generate initial data** (so the site has something to show):
    - In the repo go to **Actions** → **Refresh dashboard data** → **Run workflow**.
-   - When it finishes, it will commit the `data/` folder to the repo.
+   - When it finishes, it will commit the `public/data/` folder to the repo.
 
 2. **Enable GitHub Pages**  
    In the repo **Settings → Pages**:
@@ -52,7 +52,7 @@ When you’re ready to make the repo public and deploy:
 3. **Build and deploy the frontend**  
    Add a second job or workflow that:
    - Runs `npm ci && npm run build`.
-   - Copies `dist/` contents (and optionally `data/`) to the branch or path that Pages uses.
+   - Copies `dist/` contents (and optionally `public/data/`) to the branch or path that Pages uses.
 
    If your site URL is `https://<username>.github.io/market-dashboard/`, set in `vite.config.js`:
 
@@ -73,9 +73,8 @@ When you’re ready to make the repo public and deploy:
 market-dashboard/
 ├── .github/workflows/refresh_data.yml   # Daily data refresh (21:05 UTC)
 ├── scripts/build_data.py               # Fetches data, writes JSON
-├── data/                               # Generated data (for deploy)
-├── public/                             # Static assets; put data here for dev
-│   └── data/                           # data.json, events.json (after build)
+├── public/                             # Static assets
+│   └── data/                           # data.json, events.json (generated; workflow commits here)
 ├── src/
 │   ├── App.jsx
 │   ├── main.jsx
