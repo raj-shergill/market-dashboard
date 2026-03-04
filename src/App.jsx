@@ -6,8 +6,8 @@ import EquitiesTab from './components/tabs/EquitiesTab'
 import BreadthTab from './components/tabs/BreadthTab'
 import ColumnGuideModal from './components/modals/ColumnGuideModal'
 import ChartModal from './components/modals/ChartModal'
-const DATA_URL = '/data/data.json'
-const EVENTS_URL = '/data/events.json'
+const DATA_URL = `${import.meta.env.BASE_URL}data/data.json`
+const EVENTS_URL = `${import.meta.env.BASE_URL}data/events.json`
 
 export default function App() {
   const [data, setData] = useState(null)
