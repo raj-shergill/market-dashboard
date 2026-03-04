@@ -38,32 +38,15 @@ Refresh the browser to see updates.
 
 ## Deploy to GitHub Pages
 
-When you’re ready to make the repo public and deploy:
+1. **Enable GitHub Pages**  
+   In the repo go to **Settings → Pages**:
+   - Under **Build and deployment**, set **Source** to **GitHub Actions**.
 
-1. **Generate initial data** (so the site has something to show):
-   - In the repo go to **Actions** → **Refresh dashboard data** → **Run workflow**.
-   - When it finishes, it will commit the `public/data/` folder to the repo.
+2. **Generate initial data** (so the site has something to show):
+   - Go to **Actions** → **Refresh dashboard data** → **Run workflow**.
+   - When it finishes, it commits `public/data/` to `main`. That push triggers the **Deploy to GitHub Pages** workflow, which builds the app and deploys it.
 
-2. **Enable GitHub Pages**  
-   In the repo **Settings → Pages**:
-   - **Source**: GitHub Actions (or “Deploy from a branch”).
-   - If using “Deploy from a branch”: choose branch `main` and folder `/ (root)`.
-
-3. **Build and deploy the frontend**  
-   Add a second job or workflow that:
-   - Runs `npm ci && npm run build`.
-   - Copies `dist/` contents (and optionally `public/data/`) to the branch or path that Pages uses.
-
-   If your site URL is `https://<username>.github.io/market-dashboard/`, set in `vite.config.js`:
-
-   ```js
-   base: '/market-dashboard/'
-   ```
-
-   Then rebuild and deploy so assets load correctly.
-
-4. **Schedule**  
-   The workflow runs daily at **21:05 UTC** (Mon–Fri) to refresh data. You can also run it manually from the **Actions** tab.
+The **Refresh dashboard data** workflow runs daily at **21:05 UTC** (Mon–Fri). Each time it commits new data to `main`, the deploy workflow runs and updates the live site.
 
 ---
 
@@ -72,6 +55,7 @@ When you’re ready to make the repo public and deploy:
 ```
 market-dashboard/
 ├── .github/workflows/refresh_data.yml   # Daily data refresh (21:05 UTC)
+├── .github/workflows/deploy.yml         # Build and deploy to GitHub Pages (on push to main)
 ├── scripts/build_data.py               # Fetches data, writes JSON
 ├── public/                             # Static assets
 │   └── data/                           # data.json, events.json (generated; workflow commits here)
